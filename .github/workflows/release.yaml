@@ -1,0 +1,31 @@
+name: Build image using latest busybox image
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build-chrome-extension:
+    name: Build chrome extension artifact
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Extension Details
+        id: extension_detail
+        run: |
+          echo "extension_name=$(basename ${GITHUB_REPOSITORY})" >> $GITHUB_OUTPUT
+          echo "release_version=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+
+      - name: Build
+        run: |-
+          zip -r ${{ steps.extension_detail.outputs.extension_name }}-${{ steps.extension_detail.outputs.release_version }}.zip ./* -x "README.md" "icons/*-original*.png" ".git**" -x "**.DS_Store" "*.zip" "*.tar.gz"
+          tar -cvf ${{ steps.extension_detail.outputs.extension_name }}-${{ steps.extension_detail.outputs.release_version }}.tar.gz --exclude="README.md" --exclude="icons/*-original*.png" --exclude=".git*" --exclude="**.DS_Store" --exclude="**.DS_Store" --exclude="*.zip" --exclude="*.tar.gz" ./*
+
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: "${{ steps.extension_detail.outputs.extension_name }}-${{ steps.extension_detail.outputs.release_version }}.zip,${{ steps.extension_detail.outputs.extension_name }}-${{ steps.extension_detail.outputs.release_version }}.zip"

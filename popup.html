@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mute Options</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+    <div>
+        <label>This tab</label>
+        <input type="checkbox" id="muteThisTab" class="tgl tgl-flip">
+        <label for="muteThisTab" data-tg-off="Unmuted" data-tg-on="Muted" class="tgl-btn"></label>
+    </div>
+    <div>
+        <label>All tabs</label>
+        <input type="checkbox" id="muteAllTabs" class="tgl tgl-flip">
+        <label for="muteAllTabs" data-tg-off="Unmuted" data-tg-on="Muted" class="tgl-btn"></label>
+    </div>
+    <div>
+        <label>New tabs</label>
+        <input type="checkbox" id="muteNewTabs" class="tgl tgl-flip">
+        <label for="muteNewTabs" data-tg-off="Unmuted" data-tg-on="Muted" class="tgl-btn"></label>
+    </div>
+    <script src="popup.js"></script>
+</body>
+
+</html>
